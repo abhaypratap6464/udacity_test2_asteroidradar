@@ -95,6 +95,7 @@ fun bindPictureOfDayStatus(imageView: ImageView, status: PictureOfDayStatus) {
     }
 }
 
+
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Asteroid>?) {
     val adapter = recyclerView.adapter as AsteroidAdapter

@@ -11,7 +11,6 @@ fun lastDayOfWeek() = getDayOfWeekFormattedDate(Calendar.SATURDAY)
 
 fun plusDays(days: Int) = getFutureDayFormattedDate(plusDays = days)
 
-fun minusDays(days: Int) = getFutureDayFormattedDate(plusDays = -days)
 
 private fun getFutureDayFormattedDate(plusDays: Int): String {
     val calendar = Calendar.getInstance()

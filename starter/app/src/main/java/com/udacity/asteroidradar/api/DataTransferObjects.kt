@@ -88,13 +88,6 @@ fun List<NetworkAsteroid>.asDomainModels(): List<Asteroid> {
     }
 }
 
-@JvmName("asDatabaseModelsNetworkAsteroid")
-fun List<NetworkAsteroid>.asDatabaseModels(): List<AsteroidEntity> {
-    return map {
-        it.asDatabaseModel()
-    }
-}
-
 
 fun AsteroidEntity.asDomainModel(): Asteroid {
     return Asteroid(
@@ -135,18 +128,6 @@ fun NetworkAsteroid.asDomainModel(): Asteroid {
     )
 }
 
-fun NetworkAsteroid.asDatabaseModel(): AsteroidEntity {
-    return AsteroidEntity(
-        id = id,
-        codename = codename,
-        closeApproachDate = closeApproachData[0].closeApproachDate,
-        absoluteMagnitude = absoluteMagnitude,
-        estimatedDiameter = estimatedDiameter.diameter.max,
-        relativeVelocity = closeApproachData[0].relativeVelocity.kilometersPerSecond,
-        distanceFromEarth = closeApproachData[0].missDistance.astronomical,
-        isPotentiallyHazardous = isPotentiallyHazardous
-    )
-}
 
 
 

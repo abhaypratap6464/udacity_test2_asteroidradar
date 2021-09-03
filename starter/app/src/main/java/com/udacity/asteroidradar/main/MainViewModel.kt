@@ -6,6 +6,7 @@ import com.udacity.asteroidradar.api.AsteroidFilter
 import com.udacity.asteroidradar.api.PictureOfDayStatus
 import com.udacity.asteroidradar.domain.Asteroid
 import com.udacity.asteroidradar.repository.AsteroidRepository
+import com.udacity.asteroidradar.util.SingleLiveEvent
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -13,10 +14,10 @@ class MainViewModel(
 ) : ViewModel() {
 
     // Internally, we use a MutableLiveData to handle navigation to the selected asteroid
-    private val _navigateToSelectedAsteroid = MutableLiveData<Asteroid>()
+    private val _navigateToSelectedAsteroid = SingleLiveEvent<Asteroid>()
 
     // The external immutable LiveData for the asteroid
-    val navigateToSelectedAsteroid: LiveData<Asteroid>
+    val navigateToSelectedAsteroid: SingleLiveEvent<Asteroid>
         get() = _navigateToSelectedAsteroid
 
     fun displayAsteroidDetails(asteroid: Asteroid) {
@@ -32,10 +33,16 @@ class MainViewModel(
     val asteroid: LiveData<List<Asteroid>>
         get() = _asteroid
 
+    /**
+     * for showing progress bar while fetching result from api
+     */
     private val _pictureOfDayStatus = MutableLiveData<PictureOfDayStatus>()
     val pictureOfDayStatus: LiveData<PictureOfDayStatus>
         get() = _pictureOfDayStatus
 
+    /**
+     * for showing picture of day
+     */
     private val _pictureOfDay = MutableLiveData<PictureOfDay>()
     val pictureOfDay: LiveData<PictureOfDay>
         get() = _pictureOfDay
@@ -50,6 +57,10 @@ class MainViewModel(
 
     }
 
+
+    /**
+     * for fetching result from local database
+     */
     private fun showAsteroid() {
         _asteroid.addSource(asteroidRepository.asteroids) {
             if (asteroidFilter == AsteroidFilter.SAVED) {
@@ -70,6 +81,9 @@ class MainViewModel(
         }
     }
 
+    /**
+     * calling refreshAsteroids() api and storing data in database
+     */
     private fun refreshAsteroids() {
         viewModelScope.launch {
             try {
@@ -82,6 +96,9 @@ class MainViewModel(
         }
     }
 
+    /**
+     * calling api for showing picture of day
+     */
     private fun loadPictureOfDay() {
         viewModelScope.launch {
             try {
@@ -99,6 +116,10 @@ class MainViewModel(
     }
 
 
+    /**
+     * for filtering the result
+     * @param filter
+     */
     fun updateFilter(filter: AsteroidFilter) {
         asteroidFilter = filter
         when (asteroidFilter) {

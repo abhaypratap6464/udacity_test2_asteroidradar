@@ -19,7 +19,7 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by lazy {
         val viewModelFactory =
             MainViewModelFactory(AsteroidRepository(getDatabase(requireContext().applicationContext)))
-        ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+        ViewModelProvider(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -76,6 +76,10 @@ class MainFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
+
+    /**
+     * for menu
+     */
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main_overflow_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)

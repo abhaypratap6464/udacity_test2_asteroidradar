@@ -11,10 +11,9 @@ import androidx.navigation.ui.navigateUp
 import com.udacity.asteroidradar.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
     lateinit var binding: ActivityMainBinding
-
     lateinit var navController: NavController
-
     lateinit var appBarConfig: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,9 +24,11 @@ class MainActivity : AppCompatActivity() {
         setupNavigation()
     }
 
+
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfig)
                 || super.onSupportNavigateUp()
+
     }
 
     private fun setupNavigation() {
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(
             this,
             navController,
-            AppBarConfiguration(navController.graph)
+            appBarConfig
         )
     }
 }
